@@ -1,0 +1,79 @@
+{% extends 'attendance/base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3>Import รายชื่อนักศึกษาจาก Excel</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        เลือกไฟล์ Excel (.xlsx)
+                    </label>
+
+                    <input
+                        type="file"
+                        name="excel_file"
+                        class="form-control"
+                        accept=".xlsx,.xls"
+                        required>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    Import
+                </button>
+
+                <a href="{% url 'students' %}" class="btn btn-secondary">
+                    ยกเลิก
+                </a>
+
+            </form>
+
+            <hr>
+
+            <h5>รูปแบบไฟล์ Excel</h5>
+
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>student_id</th>
+                        <th>first_name</th>
+                        <th>last_name</th>
+                        <th>email</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>65010001</td>
+                        <td>สมชาย</td>
+                        <td>ใจดี</td>
+                        <td>65010001@siam.edu</td>
+                    </tr>
+
+                    <tr>
+                        <td>65010002</td>
+                        <td>สมหญิง</td>
+                        <td>รักเรียน</td>
+                        <td>65010002@siam.edu</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

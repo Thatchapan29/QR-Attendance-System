@@ -1,0 +1,69 @@
+{% extends "attendance/base.html" %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">{{ title }}</h4>
+    </div>
+
+    <div class="card-body">
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label">
+                    รายวิชา
+                </label>
+
+                {{ form.course }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">
+                    เวลาเริ่มเช็กชื่อ
+                </label>
+
+                {{ form.start_time }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">
+                    เวลาสิ้นสุด
+                </label>
+
+                {{ form.end_time }}
+            </div>
+
+            <div class="form-check mb-3">
+                {{ form.is_active }}
+
+                <label class="form-check-label">
+                    เปิดใช้งานรอบเช็กชื่อ
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                บันทึก
+            </button>
+
+            <a href="{% url 'attendance_sessions' %}"
+               class="btn btn-secondary">
+                ยกเลิก
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

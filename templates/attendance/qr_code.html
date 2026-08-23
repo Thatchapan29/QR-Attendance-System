@@ -1,0 +1,61 @@
+{% extends "attendance/base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">QR Code เช็กชื่อ</h3>
+        </div>
+
+        <div class="card-body text-center">
+
+            <h4 class="mb-3">
+                {{ session.course }}
+            </h4>
+
+            <p>
+                เวลาเริ่ม:
+                {{ session.start_time|date:"d/m/Y H:i" }}
+            </p>
+
+            <p>
+                เวลาสิ้นสุด:
+                {{ session.end_time|date:"d/m/Y H:i" }}
+            </p>
+
+            <hr>
+
+            <div class="my-4">
+
+                <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={{ qr_url|urlencode }}"
+                    alt="QR Code"
+                    width="300"
+                    height="300"
+                >
+
+            </div>
+
+            <p class="text-muted">
+                ให้นักศึกษาสแกน QR Code นี้เพื่อเช็กชื่อ
+            </p>
+
+            <div class="mt-3">
+
+                <a href="{% url 'attendance_sessions' %}"
+                   class="btn btn-secondary">
+                    กลับ
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

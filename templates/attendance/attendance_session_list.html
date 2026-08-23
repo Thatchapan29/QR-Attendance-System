@@ -1,0 +1,127 @@
+{% extends "attendance/base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>รอบเช็กชื่อ</h2>
+
+        <a href="{% url 'add_attendance_session' %}"
+           class="btn btn-primary">
+            + เปิดรอบเช็กชื่อ
+        </a>
+
+    </div>
+
+
+    {% if sessions %}
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>รายวิชา</th>
+
+                            <th>เวลาเริ่ม</th>
+
+                            <th>เวลาสิ้นสุด</th>
+
+                            <th>สถานะ</th>
+
+                            <th>จัดการ</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for session in sessions %}
+
+                        <tr>
+
+                            <td>
+                                {{ session.course }}
+                            </td>
+
+                            <td>
+                                {{ session.start_time|date:"d/m/Y H:i" }}
+                            </td>
+
+                            <td>
+                                {{ session.end_time|date:"d/m/Y H:i" }}
+                            </td>
+
+                            <td>
+
+                                {% if session.is_active %}
+
+                                    <span class="badge bg-success">
+                                        เปิดใช้งาน
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+                                        ปิดใช้งาน
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                <a href="{% url 'generate_qr' session.id %}"
+   class="btn btn-primary btn-sm">
+    QR Code
+</a>
+
+                                <a href="{% url 'edit_attendance_session' session.id %}"
+                                   class="btn btn-warning btn-sm">
+                                    แก้ไข
+                                </a>
+
+                                <a href="{% url 'delete_attendance_session' session.id %}"
+                                   class="btn btn-danger btn-sm">
+                                    ลบ
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-info">
+
+        ยังไม่มีรอบเช็กชื่อ
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

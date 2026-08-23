@@ -1,0 +1,81 @@
+{% extends 'attendance/base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    Dashboard
+</h2>
+
+<div class="row">
+
+    <!-- รายวิชา -->
+    <div class="col-md-3">
+
+        <div class="card shadow text-center p-4">
+
+            <h1>📚</h1>
+
+            <h4>รายวิชา</h4>
+
+            <a href="{% url 'courses' %}" class="btn btn-primary mt-2">
+                จัดการ
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- นักศึกษา -->
+    <div class="col-md-3">
+
+        <div class="card shadow text-center p-4">
+
+            <h1>👨‍🎓</h1>
+
+            <h4>นักศึกษา</h4>
+
+            <a href="{% url 'students' %}" class="btn btn-primary mt-2">
+                จัดการ
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- รอบเช็กชื่อ -->
+    <div class="col-md-3">
+
+        <div class="card shadow text-center p-4">
+
+            <h1>📅</h1>
+
+            <h4>รอบเช็กชื่อ</h4>
+
+            <a href="{% url 'attendance_sessions' %}" class="btn btn-success mt-2">
+                เปิดรอบ
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- รายงาน -->
+    <div class="col-md-3">
+
+        <div class="card shadow text-center p-4">
+
+            <h1>📊</h1>
+
+            <h4>รายงาน</h4>
+
+            <a href="#" class="btn btn-danger mt-2">
+                ดูรายงาน
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

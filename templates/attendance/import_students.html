@@ -1,0 +1,44 @@
+{% extends "attendance/base.html" %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4>นำเข้ารายชื่อนักศึกษาจาก Excel</h4>
+    </div>
+
+    <div class="card-body">
+
+        {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">เลือกไฟล์ Excel (.xlsx)</label>
+                <input type="file"
+                       name="excel_file"
+                       class="form-control"
+                       accept=".xlsx,.xls"
+                       required>
+            </div>
+
+            <button class="btn btn-success">
+                นำเข้าข้อมูล
+            </button>
+
+            <a href="{% url 'students' %}" class="btn btn-secondary">
+                กลับ
+            </a>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

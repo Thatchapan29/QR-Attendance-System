@@ -2,12 +2,14 @@
 <html lang="th">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>รายวิชา | QRAttendance System</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -24,6 +26,7 @@
             max-width: 1100px;
             margin: 0 auto;
         }
+
 
         /* Header */
 
@@ -46,46 +49,6 @@
             color: #555;
         }
 
-        /* Top Buttons */
-
-        .top-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .add-button {
-            display: inline-block;
-            padding: 12px 20px;
-            background: #222;
-            color: white;
-            text-decoration: none;
-            border-radius: 9px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .add-button:hover {
-            opacity: 0.85;
-        }
-
-        .back-button {
-            display: inline-block;
-            padding: 12px 20px;
-            background: white;
-            color: #333;
-            text-decoration: none;
-            border: 1px solid #ddd;
-            border-radius: 9px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .back-button:hover {
-            background: #f1f1f1;
-        }
 
         /* Course Section */
 
@@ -100,6 +63,7 @@
             margin: 0 0 25px;
             font-size: 24px;
         }
+
 
         /* Table */
 
@@ -149,6 +113,7 @@
             color: #666;
         }
 
+
         /* Action Buttons */
 
         .actions {
@@ -187,6 +152,7 @@
             opacity: 0.85;
         }
 
+
         /* No Course */
 
         .no-course {
@@ -196,11 +162,48 @@
             font-size: 18px;
         }
 
-        /* Bottom */
+
+        /* Bottom Buttons */
 
         .bottom-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
             margin-top: 25px;
         }
+
+        .add-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .add-button:hover {
+            opacity: 0.85;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            background: #f1f1f1;
+        }
+
 
         /* Mobile */
 
@@ -219,7 +222,11 @@
                 font-size: 27px;
             }
 
-            .top-actions {
+            .section h2 {
+                font-size: 21px;
+            }
+
+            .bottom-actions {
                 flex-direction: column;
                 align-items: stretch;
             }
@@ -230,22 +237,25 @@
                 width: 100%;
             }
 
-            .section h2 {
-                font-size: 21px;
-            }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
 <div class="container">
 
+
     <!-- Header -->
 
     <div class="header">
 
-        <h1>รายวิชาของฉัน</h1>
+        <h1>
+            รายวิชาของฉัน
+        </h1>
 
         <p>
             อาจารย์:
@@ -255,32 +265,14 @@
     </div>
 
 
-    <!-- Top Actions -->
-
-    <div class="top-actions">
-
-        <a
-            href="{% url 'course_create' %}"
-            class="add-button"
-        >
-            + เพิ่มรายวิชา
-        </a>
-
-        <a
-            href="{% url 'dashboard' %}"
-            class="back-button"
-        >
-            ← กลับหน้า Dashboard
-        </a>
-
-    </div>
-
-
     <!-- Course List -->
 
     <div class="section">
 
-        <h2>รายการรายวิชา</h2>
+        <h2>
+            รายการรายวิชา
+        </h2>
+
 
         {% if courses %}
 
@@ -298,6 +290,7 @@
                         </tr>
 
                     </thead>
+
 
                     <tbody>
 
@@ -349,6 +342,7 @@
 
             </div>
 
+
         {% else %}
 
             <div class="no-course">
@@ -360,9 +354,17 @@
     </div>
 
 
-    <!-- Bottom Actions -->
+    <!-- Bottom Buttons -->
 
     <div class="bottom-actions">
+
+        <a
+            href="{% url 'course_create' %}"
+            class="add-button"
+        >
+            + เพิ่มรายวิชา
+        </a>
+
 
         <a
             href="{% url 'dashboard' %}"
@@ -372,6 +374,7 @@
         </a>
 
     </div>
+
 
 </div>
 

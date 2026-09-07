@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>เพิ่มรายวิชา | QRAttendance System</title>
+</head>
+
+<body>
+
+    <h1>เพิ่มรายวิชา</h1>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <p>
+            <label>
+                รหัสวิชา
+            </label>
+        </p>
+
+        <input
+            type="text"
+            name="course_code"
+            placeholder="เช่น 219-101"
+            required
+        >
+
+        <p>
+            <label>
+                ชื่อวิชา
+            </label>
+        </p>
+
+        <input
+            type="text"
+            name="course_name"
+            placeholder="เช่น Computer Programming"
+            required
+        >
+
+        <p>
+            <label>
+                รายละเอียด
+            </label>
+        </p>
+
+        <textarea
+            name="description"
+            rows="5"
+            cols="40"
+            placeholder="รายละเอียดรายวิชา"
+        ></textarea>
+
+        <br><br>
+
+        <button type="submit">
+            บันทึกรายวิชา
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="{% url 'course_list' %}">
+        กลับไปรายวิชา
+    </a>
+
+</body>
+
+</html>

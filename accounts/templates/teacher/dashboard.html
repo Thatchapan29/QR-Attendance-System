@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Dashboard | QRAttendance System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .header,
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 15px;
+            font-size: 32px;
+        }
+
+        .header p {
+            margin: 8px 0;
+            font-size: 18px;
+        }
+
+        .role {
+            font-weight: bold;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .button {
+            display: block;
+            padding: 18px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            background: #222;
+            color: white;
+        }
+
+        .button:hover {
+            opacity: 0.85;
+        }
+
+        .button.secondary {
+            background: #555;
+        }
+
+        .history-button {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            background: #222;
+            color: white;
+        }
+
+        .history-button:hover {
+            opacity: 0.85;
+        }
+
+        /* Logout Button */
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 18px;
+            background: #c62828;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            opacity: 0.85;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .header,
+            .section {
+                padding: 20px;
+            }
+
+            .buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>Teacher Dashboard</h1>
+
+        <p>
+            ยินดีต้อนรับ
+            <strong>{{ user.username }}</strong>
+        </p>
+
+        <p>
+            สิทธิ์:
+            <span class="role">อาจารย์</span>
+        </p>
+
+        <form
+            method="post"
+            action="{% url 'logout' %}"
+            class="logout-form"
+        >
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="logout-button"
+            >
+                ออกจากระบบ
+            </button>
+        </form>
+
+    </div>
+
+
+    <!-- Menu -->
+
+    <div class="section">
+
+        <h2>จัดการการเข้าเรียน</h2>
+
+        <div class="buttons">
+
+            <a
+                href="{% url 'course_list' %}"
+                class="button"
+            >
+                จัดการรายวิชา
+            </a>
+
+            <a
+                href="{% url 'attendance_create' %}"
+                class="button"
+            >
+                สร้างการเช็คชื่อ
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Attendance History -->
+
+    <div class="section">
+
+        <h2>ประวัติการเช็คชื่อ</h2>
+
+        <a
+            href="{% url 'teacher_attendance_history' %}"
+            class="history-button"
+        >
+            ดูประวัติการเช็คชื่อ
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>กำลังเช็คชื่อ | QRAttendance System</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 40px;
+        }
+
+        .session-info {
+            margin-bottom: 30px;
+        }
+
+        .session-info h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .session-info h2 {
+            font-size: 24px;
+        }
+
+        .session-info p {
+            font-size: 18px;
+        }
+
+        hr {
+            margin: 25px 0;
+        }
+
+        #attendance-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .round {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .timer {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 15px;
+        }
+
+        .status {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 15px;
+        }
+
+        .qr-box {
+            width: 350px;
+            height: 350px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 25px auto;
+        }
+
+        .qr-box img {
+            width: 350px;
+            height: 350px;
+        }
+
+        .otp-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .otp {
+            font-size: 56px;
+            font-weight: bold;
+            letter-spacing: 12px;
+            margin: 10px;
+        }
+
+        .otp-description {
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        .total-time {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="session-info">
+
+        <h1>
+            กำลังเปิดการเช็คชื่อ
+        </h1>
+
+        <h2>
+            {{ session.course.course_code }}
+            -
+            {{ session.course.course_name }}
+        </h2>
+
+        <p>
+            อาจารย์:
+            {{ session.course.teacher.username }}
+        </p>
+
+    </div>
+
+    <hr>
+
+    <div id="attendance-area">
+
+        <div class="round">
+            รอบที่ <span id="round-number">-</span>
+        </div>
+
+        <div class="timer">
+            <span id="timer">--</span>
+        </div>
+
+        <div class="status" id="status">
+            กำลังตรวจสอบ...
+        </div>
+
+        <!-- QR CODE -->
+
+        <div class="qr-box">
+
+            <img
+                id="qr-image"
+                src=""
+                alt="QR Code"
+            >
+
+        </div>
+
+        <!-- OTP -->
+
+        <div class="otp-title">
+            OTP
+        </div>
+
+        <div class="otp" id="otp">
+            ------
+        </div>
+
+        <p class="otp-description">
+            OTP จะเปลี่ยนทุก 30 วินาที
+        </p>
+
+    </div>
+
+    <hr>
+
+    <p class="total-time">
+        ระยะเวลาทั้งหมด 6 นาที
+    </p>
+
+
+    <script>
+
+        const tokens = [
+
+            {% for token in tokens %}
+
+            {
+                round: {{ token.round_number }},
+                otp: "{{ token.otp }}",
+                qr: "{{ token.qr_token }}",
+                start: new Date("{{ token.valid_from|date:'c' }}"),
+                end: new Date("{{ token.valid_until|date:'c' }}")
+            },
+
+            {% endfor %}
+
+        ];
+
+
+        function updateAttendance() {
+
+            const now = new Date();
+
+            let currentToken = null;
+
+            for (const token of tokens) {
+
+                if (
+                    now >= token.start &&
+                    now < token.end
+                ) {
+
+                    currentToken = token;
+                    break;
+
+                }
+
+            }
+
+
+            if (!currentToken) {
+
+                document.getElementById("status").innerText =
+                    "หมดเวลาเช็คชื่อ";
+
+                document.getElementById("round-number").innerText =
+                    "-";
+
+                document.getElementById("timer").innerText =
+                    "00:00";
+
+                document.getElementById("otp").innerText =
+                    "หมดเวลา";
+
+                document.getElementById("qr-image").style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            document.getElementById("qr-image").style.display =
+                "block";
+
+
+            document.getElementById("round-number").innerText =
+                currentToken.round;
+
+
+            document.getElementById("otp").innerText =
+                currentToken.otp;
+
+
+            document.getElementById("status").innerText =
+                "กำลังเปิดรับการเช็คชื่อ";
+
+
+            /*
+             * สร้าง URL สำหรับ QR Code
+             */
+
+            const qrData =
+                "http://192.168.110.5:8000" +
+                "/attendance/check/" +
+                currentToken.qr;
+
+
+            /*
+             * ใช้บริการสร้าง QR Code
+             */
+
+            document.getElementById("qr-image").src =
+                "https://api.qrserver.com/v1/create-qr-code/?size=350x350&data="
+                + encodeURIComponent(qrData);
+
+
+            /*
+             * นับเวลาที่เหลือของ OTP
+             */
+
+            const remaining =
+                Math.max(
+                    0,
+                    Math.floor(
+                        (currentToken.end - now) / 1000
+                    )
+                );
+
+
+            const minutes =
+                Math.floor(remaining / 60);
+
+            const seconds =
+                remaining % 60;
+
+
+            document.getElementById("timer").innerText =
+                String(minutes).padStart(2, "0")
+                + ":"
+                + String(seconds).padStart(2, "0");
+
+        }
+
+
+        updateAttendance();
+
+
+        /*
+         * อัปเดตทุก 1 วินาที
+         */
+
+        setInterval(
+            updateAttendance,
+            1000
+        );
+
+    </script>
+
+</body>
+
+</html>

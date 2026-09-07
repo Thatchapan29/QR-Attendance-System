@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | QRAttendance System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+
+            font-family: Arial, sans-serif;
+
+            background: #f5f7fa;
+
+            color: #222;
+        }
+
+        .container {
+            max-width: 1000px;
+
+            margin: 0 auto;
+        }
+
+
+        /* Header */
+
+        .header {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 12px;
+
+            font-size: 32px;
+        }
+
+        .system-name {
+            color: #555;
+
+            font-size: 18px;
+
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            margin: 8px 0;
+
+            font-size: 17px;
+        }
+
+        .role {
+            font-weight: bold;
+        }
+
+
+        /* Logout */
+
+        .logout-form {
+            margin: 20px 0 0;
+        }
+
+        .logout-button {
+            padding: 10px 18px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #c62828;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            opacity: 0.85;
+        }
+
+
+        /* Main Section */
+
+        .section {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .section h2 {
+            margin: 0 0 25px;
+
+            font-size: 24px;
+        }
+
+
+        /* Menu */
+
+        .menu-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+        .menu-button {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 80px;
+
+            padding: 20px;
+
+            background: #222;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            text-align: center;
+
+            border: none;
+
+            cursor: pointer;
+        }
+
+        .menu-button:hover {
+            opacity: 0.85;
+        }
+
+
+        /* Different button */
+
+        .menu-button.secondary {
+            background: #555;
+        }
+
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .header,
+            .section {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 27px;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-button {
+                min-height: 65px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>
+            Admin Dashboard
+        </h1>
+
+        <div class="system-name">
+            QRAttendance System
+        </div>
+
+        <p>
+            ยินดีต้อนรับ
+            <strong>{{ user.username }}</strong>
+        </p>
+
+        <p>
+            สิทธิ์:
+            <span class="role">
+                ผู้ดูแลระบบ
+            </span>
+        </p>
+
+
+        <!-- Logout -->
+
+        <form
+            method="post"
+            action="{% url 'logout' %}"
+            class="logout-form"
+        >
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="logout-button"
+            >
+                ออกจากระบบ
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Management -->
+
+    <div class="section">
+
+        <h2>
+            จัดการระบบ
+        </h2>
+
+
+        <div class="menu-grid">
+
+
+            <button
+                type="button"
+                class="menu-button"
+            >
+                จัดการนักศึกษา
+            </button>
+
+
+            <button
+                type="button"
+                class="menu-button"
+            >
+                จัดการอาจารย์
+            </button>
+
+
+            <button
+                type="button"
+                class="menu-button secondary"
+            >
+                จัดการรายวิชา
+            </button>
+
+
+            <button
+                type="button"
+                class="menu-button secondary"
+            >
+                ดูข้อมูลการเข้าเรียน
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

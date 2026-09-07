@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard | QRAttendance System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .header,
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 15px;
+            font-size: 32px;
+        }
+
+        .header p {
+            margin: 8px 0;
+            font-size: 18px;
+        }
+
+        .role {
+            font-weight: bold;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .scan-button {
+            display: inline-block;
+            padding: 15px 25px;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .scan-button:hover {
+            opacity: 0.85;
+        }
+
+        /* Logout Button */
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 18px;
+            background: #c62828;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            opacity: 0.85;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .header,
+            .section {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>Student Dashboard</h1>
+
+        <p>
+            ยินดีต้อนรับ
+            <strong>{{ user.username }}</strong>
+        </p>
+
+        <p>
+            สิทธิ์:
+            <span class="role">นักศึกษา</span>
+        </p>
+
+        <form
+            method="post"
+            action="{% url 'logout' %}"
+            class="logout-form"
+        >
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="logout-button"
+            >
+                ออกจากระบบ
+            </button>
+        </form>
+
+    </div>
+
+
+    <!-- Attendance -->
+
+    <div class="section">
+
+        <h2>ระบบเช็คชื่อ</h2>
+
+        <p>
+            สแกน QR Code เพื่อเช็คชื่อเข้าเรียน
+        </p>
+
+        <button class="scan-button">
+            สแกน QR Code
+        </button>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
